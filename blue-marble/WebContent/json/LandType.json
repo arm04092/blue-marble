@@ -1,0 +1,17 @@
+[
+ {
+   "LandTypeNo": "1",
+   "LandType": "일반",
+   "LandCount": "23"
+ },
+ {
+   "LandTypeNo": "2",
+   "LandType": "관광지",
+   "LandCount": "5"
+ },
+ {
+   "LandTypeNo": "3",
+   "LandType": "특수",
+   "LandCount": "12"
+ }
+]

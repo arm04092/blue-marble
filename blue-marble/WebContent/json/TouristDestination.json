@@ -1,0 +1,44 @@
+[
+ {
+   "landNo": "6",
+   "landName": "제주",
+   "landPrice": "200000",
+   "landTollFee": "300000",
+   "owner": "0"
+ },
+ {
+   "landNo": "16",
+   "landName": "콩코드여객기",
+   "landPrice": "200000",
+   "landTollFee": "300000",
+   "owner": "0"
+ },
+ {
+   "landNo": "26",
+   "landName": "부산",
+   "landPrice": "500000",
+   "landTollFee": "600000",
+   "owner": "0"
+ },
+ {
+   "landNo": "29",
+   "landName": "퀸 엘리자베스호",
+   "landPrice": "300000",
+   "landTollFee": "250000",
+   "owner": "0"
+ },
+ {
+   "landNo": "33",
+   "landName": "컬럼비아호",
+   "landPrice": "450000",
+   "landTollFee": "400000",
+   "owner": "0"
+ },
+ {
+   "landNo": "40",
+   "landName": "서울",
+   "landPrice": "1000000",
+   "landTollFee": "2000000",
+   "owner": "0"
+ }
+]
