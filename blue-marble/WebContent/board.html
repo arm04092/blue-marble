@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8">
 <title>Blue Marble</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -14,11 +15,58 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <style>
-.gameborder {
-	border: 1px solid #000000;
-	width: 120px;
-	height: 80px;
+body {
+	background: lightblue;
 }
+
+.control {
+	padding-left: 30px;
+}
+.marble_board {
+	background-image: url("./image/board1.PNG");
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-size: 100%;
+	border-radius: 15px;
+	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
+	padding-bottom: 1px;
+	background-color: #669900;
+	overflow: visible;
+}
+
+td:hover  {
+	box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.6);
+	background: rgba(0, 191, 255, 0.2);
+	border-radius: 15px;
+}
+
+.horses{
+	font-size: xx-large;
+}
+.td_tb{
+	padding-top: 58px !important;
+}
+.td_rl{
+	padding-top: 30px !important;
+}
+
+.gameborder {
+	border: none !important;
+}
+
+.no_hover{
+	visibility: hidden;
+}
+
+#marble_header{
+	padding: 30px;
+}
+
+#marble_footer{
+	padding: auto;
+	margin: auto;
+}
+
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <!-- Latest compiled JavaScript -->
@@ -26,167 +74,702 @@
 
 </head>
 <body>
-	<div class="container">
-		<h5>
-			Blue Marble
-		</h5>
-		<div class="row">
-			<div class="col-sm-1 gameborder">
-				<span id="p21">21</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p22">22</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p23">23</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p24">24</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p25">25</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p26">26</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p27">27</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p28">28</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p29">29</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p30">30</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p31">31</span>
-			</div>
+<div class="row">
+	<div class="control col-sm-3">
+		<header id="marble_header">
+			<h1>blue-marble</h1>
+		</header>
+	
+		<div>
+			<button id="startBtn" type="button">스타트버튼</button>
 		</div>
-		<div class="row">
-			<div class="col-sm-1 gameborder">
-				<span id="p20">20</span>
-			</div>
-			<div class="col-sm-9">
-				<span class="glyphicon glyphicon-arrow-right"></span>&nbsp;
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p32">32</span>
-			</div>
+		<div>
+			<button id="diceBtn" type="button">주사위 굴리기</button>
 		</div>
-		<div class="row">
-			<div class="col-sm-1 gameborder">
-				<span id="p19">19</span>
-			</div>
-			<div class="col-sm-9">&nbsp;</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p33">33</span>
-			</div>
+		<div>
+			<button id="doubleBtn" type="button">더블 테스트</button>
 		</div>
-		<div class="row">
-			<div class="col-sm-1 gameborder">
-				<span id="p18">18</span>
-			</div>
-			<div class="col-sm-9">&nbsp;</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p34">34</span>
-			</div>
+		<div>
+			<button id="goldKeyBtn" type="button">황금열쇠 테스트</button>
 		</div>
-		<div class="row">
-			<div class="col-sm-1 gameborder">
-				<span id="p17">17</span>
-			</div>
-			<div class="col-sm-9">&nbsp;</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p35">35</span>
-			</div>
+		<div>
+			<div>주사위1<input id="dice1" readonly="readonly"></div>
+			<div>주사위2<input id="dice2" readonly="readonly"></div>
 		</div>
-		<div class="row">
-			<div class="col-sm-1 gameborder">
-				<span id="p16">16</span>
-			</div>
-			<div class="col-sm-9">
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p36">36</span>
-			</div>
+		<h3>현재 플레이어</h3>
+		<div id="currentPlayerInfo">
+			<div>playerNo: <input id="playerNo" readonly="readonly"></div>
+			<div>location: <input id="location" readonly="readonly"></div>
+			<div>turn: <input id="click" readonly="readonly"></div>
+			<div>money: <input id="money" readonly="readonly"></div>
+			<div>우대권: <input id="specialPass" readonly="readonly"></div>
+			<div>무인도탈출권: <input id="desertIslandEscape" readonly="readonly"></div>
 		</div>
-		<div class="row">
-			<div class="col-sm-1 gameborder">
-				<span id="p15">15</span>
-			</div>
-			<div class="col-sm-9">&nbsp;</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p37">37</span>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-1 gameborder">
-				<span id="p14">14</span>
-			</div>
-			<div class="col-sm-9">&nbsp;</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p38">38</span>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-1 gameborder">
-				<span id="p13">13</span>
-			</div>
-			<div class="col-sm-9">&nbsp;</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p39">39</span>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-1 gameborder">
-				<span id="p12">12</span>
-			</div>
-			<div class="col-sm-9">&nbsp;</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p40">40</span>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-sm-1 gameborder">
-				<span id="p11">11</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p10">10</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p9">9</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p8">8</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p7">7</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p6">6</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p5">5</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p4">4</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p3">3</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p2">2</span>
-			</div>
-			<div class="col-sm-1 gameborder">
-				<span id="p1">1</span>
-				<span id="p1">
-					<button class="btn-info">*</button>
-				</span>
-			</div>
+		<h4>땅 정보</h4>
+		<div id="clickMapInfo">
+			<div>땅 이름: <input id="landName" readonly="readonly"></div>
+			<div>땅 유형: <input id="mapType" readonly="readonly"></div>
+			<div>땅 번호: <input id="landNo" readonly="readonly"></div>
+			<div>땅 주인: <input id="landOwner" readonly="readonly"></div>
+			<div>통행료: <input id="landTollFee" readonly="readonly"></div>
 		</div>
 	</div>
+	<div class="marble_board col-sm-6" align="center">
+         <div style="padding-right: 2px; padding-top: 13px; padding-bottom: 20px;">
+            <table class="table" id="table" style="text-align: center; font-weight: bold;">
+               <tr height="149px">
+                  <td width="14%" class="td_tb gameborder" id="p21">
+                     <span id="p21"></span>
+                  </td>
+                  <td width="7%" class="td_tb gameborder" id="p22">
+                     <span id="p22"></span>
+                  </td>
+                  <td width="7%" class="td_tb gameborder" id="p23">
+                     <span id="p23"></span>
+                  </td>
+                  <td width="7%" class="td_tb gameborder" id="p24">
+                     <span id="p24"></span>
+                  </td>
+                  <td width="7%" class="td_tb gameborder" id="p25">
+                     <span id="p25"></span>
+                  </td>
+                  <td width="7%" class="td_tb gameborder" id="p26">
+                     <span id="p26"></span>
+                  </td>
+                  <td width="7%" class="td_tb gameborder" id="p27">
+                     <span id="p27"></span>
+                  </td>
+                  <td width="7%" class="td_tb gameborder" id="p28">
+                     <span id="p28"></span>
+                  </td>
+                  <td width="7%" class="td_tb gameborder" id="p29">
+                     <span id="p29"></span>
+                  </td>
+                  <td width="7%" class="td_tb gameborder" id="p30">
+                     <span id="p30"></span>
+                  </td>
+                  <td width="14%" class="td_tb gameborder" id="p31">
+                     <span id="p31"></span>
+                  </td>
+               </tr>
+               
+               <tr height="82px">
+                  <td width="7%" class="td_rl gameborder" id="p20">
+                     <span id="p20"></span>
+                  </td>
+                  <td class="gameborder no_hover" colspan="9" rowspan="9">
+                     <!-- 빈칸 행 열 합치기 & 클릭 비활성화   -->
+                  </td>
+                  <td class="td_rl gameborder" id="p32">
+                     <span id="p32"></span>
+                  </td>
+               </tr>
+               
+               <tr height="82px">
+                  <td class="td_rl gameborder" id="p19">
+                     <span id="p19"></span>
+                  </td>
+                  
+                  <td class="td_rl gameborder" id="p33">
+                     <span id="p33"></span>
+                  </td>
+               </tr>
+               
+               <tr height="83px">
+                  <td class="td_rl gameborder" id="p18">
+                     <span id="p18"></span>
+                  </td>
+                  
+                  <td class="td_rl gameborder" id="p34">
+                     <span id="p34"></span>
+                  </td>
+               </tr>
+               
+               <tr height="83px">
+                  <td class="td_rl gameborder" id="p17">
+                     <span id="p17"></span>
+                  </td>
+                  
+                  <td class="td_rl gameborder" id="p35">
+                     <span id="p35"></span>
+                  </td>
+               </tr>
+               
+               <tr height="82px">
+                  <td class="td_rl gameborder" id="p16">
+                     <span id="p16"></span>
+                  </td>
+                  
+                  <td class="td_rl gameborder" id="p36">
+                     <span id="p36"></span>
+                  </td>
+               </tr>
+               
+               <tr height="82px">
+                  <td class="td_rl gameborder" id="p15">
+                     <span id="p15"></span>
+                  </td>
+                  
+                  <td class="td_rl gameborder" id="p37">
+                     <span id="p37"></span>
+                  </td>
+               </tr>
+               
+               <tr height="82px">
+                  <td class="td_rl gameborder" id="p14">
+                     <span id="p14"></span>
+                  </td>
+                  
+                  <td class="td_rl gameborder" id="p38">
+                     <span id="p38"></span>
+                  </td>
+               </tr>
+               
+               <tr height="84px">
+                  <td class="td_rl gameborder" id="p13">
+                     <span id="p13"></span>
+                  </td>
+                  
+                  <td class="td_rl gameborder" id="p39">
+                     <span id="p39"></span>
+                  </td>
+               </tr>
+               
+               <tr height="84px">
+                  <td class="td_rl gameborder" id="p12">
+                     <span id="p12"></span>
+                  </td>
+                  
+                  <td class="td_rl gameborder" id="p40">
+                     <span id="p40"></span>
+                  </td>
+               </tr>
+            
+               <tr height="149px">
+                  <td width="14%" class="td_tb gameborder" id="p11">
+                     <span id="p11"></span>
+                  </td>
+                  <td width="7.5%" class="td_tb gameborder" id="p10">
+                     <span id="p10"></span>
+                  </td>
+                  <td width="7.5%" class="td_tb gameborder" id="p9">
+                     <span id="p9"></span>
+                  </td>
+                  <td width="7.7%" class="td_tb gameborder" id="p8">
+                     <span id="p8"></span>
+                  </td>
+                  <td width="8%" class="td_tb gameborder" id="p7">
+                     <span id="p7"></span>
+                  </td>
+                  <td width="7.5%" class="td_tb gameborder" id="p6">
+                     <span id="p6"></span>
+                  </td>
+                  <td width="7.5%" class="td_tb gameborder" id="p5">
+                     <span id="p5"></span>
+                  </td>
+                  <td width="7.5%" class="td_tb gameborder" id="p4">
+                     <span id="p4"></span>
+                  </td>
+                  <td width="7.7%" class="td_tb gameborder" id="p3">
+                     <span id="p3"></span>
+                  </td>
+                  <td width="7.5%" class="td_tb gameborder" id="p2">
+                     <span id="p2"></span>
+                  </td>
+                  <td width="14%" class="td_tb gameborder" id="p1">
+                     <span id="p1">
+                     </span>
+                  </td>
+               </tr>
+            </table>
+         </div>
+      </div>
+</div>
+<footer class="marble_footer">
+	<hr>
+	<div class="text-light">
+		<b>Blue marble 2019.10~2019.11</b>
+	</div>
+</footer>
+<!-- 내용 끝 -->
 </body>
+<!-- 땅 배열, 골드카드 배열 가져오기 -->
+<script src="/blue-marble/scripts/mapObj.js"></script>
+<script src="/blue-marble/scripts/goldCard.js"></script>
+<script>
+
+	$(document).ready(function() {
+		$("#startBtn").click(function() {
+			let playerLen = 0
+			playerLen = prompt('player num'); // 플레이어 인원 수
+			console.log("typeof", typeof(playerLen));
+			if(playerLen > 0 && playerLen < 5) {
+				$("#startBtn").css("display", "none");	// 게임 시작되면 사라짐	
+			} else {
+				location.reload();
+			}
+			// player 객체 생성
+			function Player(playerNo) {
+				this.playerNo= playerNo; // 플레이어 넘버
+				this.location= 1; // 현재 위치
+				this.destination= 1; // 이동할 목적지
+				this.click= 0; // 클릭 횟수
+				this.doubleFlag = 0; // 주사위 더블 검사, 0,1으로 바뀌는 변수
+				this.money = 30000000;
+				this.specialPass = 0; // 우대권
+				this.desertIslandEscape = 0; // 무인도 탈출
+			}
+			
+			let player1 = new Player(1); 
+			let player2 = new Player(2);
+			let player3 = new Player(3);
+			let player4 = new Player(4);
+			
+			// player 객체 배열
+			players = [player1, player2, player3, player4];
+			players = players.slice(0,playerLen); // 인원 수 만큼 배열 자르기
+			let playerNum = 0; // players 배열의 인덱스, 0부터 (플레이어 수 -1)까지 순서대로 바뀌는 변수
+			let currentPlayer = players[0]; // 현재 플레이어
+			let mapType = 0;
+			
+			// 플레이어 말 생성
+			for(let i = 1; i<=playerLen; i++) {
+				let html = "<span id='player"+i+"'><button class='btn-info'>"+i+"</button></span>";
+				$("#p1").append(html);
+			}
+			
+			console.log("players: ", players); 	// 플레이어 배열
+			console.log("mapObj1: ", landCard);	// 전체 땅 객체
+			console.log("mapObj2: ", landType);	// 땅 타입 객체
+			console.log("mapObj3: ", nomalLand); // 일반 땅 객체
+			console.log("mapObj4: ", touristDestination);// 관광지 객체
+			console.log("mapObj5: ", specialLand); // 특수 지역 객체
+			shuffle();
+			console.log("goldCard deck: ", deck); // 황금열쇠 객체
+			console.log("deck length: ", Object.keys(deck).length); // 황금열쇠 수
+			
+			/* 말판에 땅 이름 추가
+			for(let i=0; i<landCard.length; i++) {
+				$("#p"+(i+1)).append("<div>"+landCard[i].landName+"<div>")
+			}
+			*/
+			//황금 열쇠 테스트 버튼클릭
+			$("#goldKeyBtn").click(function() {
+				// 클릭 횟수 증가
+				currentPlayer.click += 1;
+				console.log(currentPlayer);
+				// 현재 플레이어 정보 표시
+				displayCurrentPlayerInfo(currentPlayer);
+				// 주사위 던지기
+				let dicePoint = dice(currentPlayer);
+				
+				// 이동할 목적지 계산
+				let goldKey = [3,8,13,18,23,36];
+				currentPlayer.destination = goldKey[Math.floor(Math.random()*6)];
+				console.log("location: ", currentPlayer.location);
+				console.log("destination: ", currentPlayer.destination);
+				
+				// 말 이동
+				move(currentPlayer);
+				displayCurrentPlayerInfo(currentPlayer);
+				
+				// 말 도착 후 행동
+				arrived(currentPlayer);
+				displayCurrentPlayerInfo(currentPlayer);
+				
+				// 다음 플레이어 넘김, 클릭 횟수 초기화(3연속 더블까지만 진행)
+				currentPlayer = nextPlayer(currentPlayer);
+			})
+			
+			// 더블 테스트용 버튼
+			$("#doubleBtn").click(function() {
+				// 클릭 횟수 증가
+				currentPlayer.click += 1;
+				console.log(currentPlayer);
+				
+				// 주사위 던지기
+				let dice1 = Math.floor(Math.random()*6+1);
+				let dice2 = dice1;
+				$("#dice1").val(dice1);
+				$("#dice2").val(dice2);
+				currentPlayer.doubleFlag = 1;
+				let dicePoint = dice1 + dice2;
+				
+				// 이동할 목적지 계산
+				currentPlayer.destination = currentPlayer.location + dicePoint;
+				if(currentPlayer.destination > 40) {
+					currentPlayer.destination -= 40;
+				}
+				console.log("location: ", currentPlayer.location);
+				console.log("destination: ", currentPlayer.destination);
+				
+				// 말 이동
+				move(currentPlayer);
+				$("#location").val(currentPlayer.location); 
+				
+				// 말 도착 후 행동
+				console.log("현재 위치: ",landCard[currentPlayer.location-1].landName);
+				mapType = landCard[currentPlayer.location-1].type;
+				arrived(mapType);
+				$("#money").val(currentPlayer.money);
+				
+				// 다음 플레이어 넘김, 클릭 횟수 초기화(3연속 더블까지만 진행)
+				currentPlayer = nextPlayer(currentPlayer);
+			}) 
+			
+			// 주사위 버튼 클릭
+			$("#diceBtn").click(function() {
+				// 클릭 횟수 증가
+				currentPlayer.click += 1;
+				console.log(currentPlayer);
+				// 현재 플레이어 정보 표시
+				$("#playerNo").val(currentPlayer.playerNo);
+				$("#location").val(currentPlayer.location); 
+				$("#money").val(currentPlayer.money);
+				$("#click").val(currentPlayer.click);
+				// 주사위 던지기
+				let dicePoint = dice(currentPlayer);
+				
+				// 이동할 목적지 계산
+				currentPlayer.destination = currentPlayer.location + dicePoint;
+				
+				console.log("location: ", currentPlayer.location);
+				console.log("destination: ", currentPlayer.destination);
+				
+				// 말 이동
+				move(currentPlayer);
+				$("#location").val(currentPlayer.location); 
+				
+				// 말 도착 후 행동
+				arrived(currentPlayer);
+				displayCurrentPlayerInfo(currentPlayer);
+				
+				// 다음 플레이어 넘김, 클릭 횟수 초기화(3연속 더블까지만 진행)
+				currentPlayer = nextPlayer(currentPlayer);
+			})
+			
+			
+			// 주사위 던지기
+			function dice(currentPlayer) {
+				// 주사위 눈
+				let dice1 = 0;
+				let dice2 = 0;
+				
+				dice1 = Math.floor(Math.random()*6+1);
+				dice2 = Math.floor(Math.random()*6+1);
+				$("#dice1").val(dice1);
+				$("#dice2").val(dice2);
+				console.log("1: " + dice1);
+				console.log("2: " + dice2);
+				if(dice1 == dice2) {
+					console.log("double!");
+					currentPlayer.doubleFlag = 1;
+				}
+				// 두 개의 주사위 합
+				let dicePoint = dice1 + dice2;
+				return dicePoint;
+			}
+			
+			// 말 이동
+			function move(currentPlayer) {
+				// 한 바퀴 돌았을 때 번호 계산 후 월급 지급
+				if(currentPlayer.destination > 40) {
+					currentPlayer.destination -= 40;
+					currentPlayer.money += 200000;
+				}
+				// 3연속 더블일 경우
+				if(currentPlayer.click == 3 && currentPlayer.doubleFlag == 1) {
+					// 무인도로 이동
+					$("#player"+currentPlayer.playerNo).appendTo("#p11");
+					currentPlayer.location = 11;
+					console.log("이동 후 location: ", currentPlayer.location);
+					return;
+				} else {
+					$("#player"+currentPlayer.playerNo).appendTo("#p"+currentPlayer.destination);
+				}
+				// 이동 완료 후 location 값 변경
+				currentPlayer.location = currentPlayer.destination;
+				console.log("이동 후 location: ", currentPlayer.location);
+			}
+			
+			// 다음 플레이어
+			function nextPlayer(currentPlayer) {
+				// 더블이 아니고, 클릭횟수 3번일 경우
+				if(currentPlayer.doubleFlag != 1 || currentPlayer.click == 3 ) {
+					playerNum += 1;
+					currentPlayer.click = 0
+					if(playerNum>=players.length) {
+						playerNum = 0;
+					}
+				// 더블이면 플레이어 넘기지 않고 진행
+				} else {
+					currentPlayer.doubleFlag = 0;
+				}
+				console.log("nextPlayerIdx",playerNum);
+				
+				// 다음 플레이어 객체 리턴
+				return players[playerNum];
+			}
+			
+			// 목적지 도착
+			function arrived(currentPlayer) {
+				// 도착한 땅 유형 검사				
+				console.log("현재 위치: ", landCard[currentPlayer.location-1].landName);
+				mapType = landCard[currentPlayer.location-1].type;
+				console.log("땅 유형: ", mapType);
+				console.log("땅 번호: ", landCard[currentPlayer.location-1].landNo);
+				if(mapType == 1) {
+					// 일반 땅에 도착했을 때의 진행
+					$(nomalLand).each(function(index, item) {
+						if(item.landNo==currentPlayer.location) {
+							console.log("땅 가격: ", item.landPrice);
+							console.log("별장 가격: ", item.villaConstruction);
+							console.log("빌딩 가격: ", item.buildingConstruction);
+							console.log("호텔 가격: ", item.hotelConstruction);
+						}
+					});
+					
+					
+				}
+				if(mapType == 2) {
+					// 관광지에 도착했을 때의 진행
+					$(touristDestination).each(function(index, item) {
+						if(item.landNo==currentPlayer.location) {
+							console.log("땅 가격: ", item.landPrice);	
+						}
+					});
+				}
+				if(mapType == 3) {
+					// 특수지역에 도착했을 때의 진행
+					$(specialLand).each(function(index, item) {
+						if(item.landNo==currentPlayer.location) {
+							console.log("행동: ", item.action);
+							if(item.landName=="황금열쇠") {
+								let charge = 0;
+								let goldCard = deck.pop();
+								switch(goldCard.no) {
+									case "1": 
+										currentPlayer.money -= 50000;
+										deck.unshift(goldCard);
+										break;
+									case "2": 
+										currentPlayer.money += 200000;
+										deck.unshift(goldCard);
+										break;
+									case "3": 
+										currentPlayer.desertIslandEscape += 1; // 무인도 탈출
+										break;
+									case "4": // 무인도 이동
+										$("#player"+currentPlayer.playerNo).appendTo("#p11");
+										currentPlayer.location = 11;
+										deck.unshift(goldCard);
+										break;
+									case "5": // 제주도 이동
+										currentPlayer.destination = 6;
+										move(currentPlayer);
+										arrived(currentPlayer);
+										deck.unshift(goldCard);
+										break;
+									case "6": 
+										currentPlayer.money -= 50000;
+										deck.unshift(goldCard);
+										break;
+									case "7": 
+										currentPlayer.money -= 100000;
+										deck.unshift(goldCard);
+										break;
+									case "8": 
+										currentPlayer.money += 50000;
+										deck.unshift(goldCard);
+										break;
+									case "9": // 뒤로 3칸
+										currentPlayer.destination = currentPlayer.location - 3;
+										// destination이 0보다 작으면 +40
+										if(currentPlayer.destination < 1) {
+											currentPlayer.destination += 40;
+										}
+										move(currentPlayer);
+										arrived(currentPlayer);
+										deck.unshift(goldCard);
+										break;
+									case "10": // 뒤로 2칸
+										currentPlayer.destination = currentPlayer.location - 2;
+										// destination이 0보다 작으면 +40
+										if(currentPlayer.destination < 1) {
+											currentPlayer.destination += 40;
+										}
+										move(currentPlayer);
+										arrived(currentPlayer);
+										deck.unshift(goldCard);
+										break;
+									case "11": // 출발지 이동
+										currentPlayer.destination = 1;
+										move(currentPlayer);
+										deck.unshift(goldCard);
+										break;
+									case "12": 
+										currentPlayer.money += 100000;
+										deck.unshift(goldCard);
+										break;
+									case "13": 
+										currentPlayer.specialPass += 1; // 우대권
+										break;
+									case "14": 
+										currentPlayer.specialPass += 1; // 우대권
+										break;
+									case "15": // 콩코드 이동
+										currentPlayer.destination = 16;
+										move(currentPlayer);
+										arrived(currentPlayer);
+										deck.unshift(goldCard);
+										break;
+									case "16": // 부산 이동
+										currentPlayer.destination = 26;
+										move(currentPlayer);
+										arrived(currentPlayer);
+										deck.unshift(goldCard);
+										break;
+									case "17": // 돈 지출
+										charge = calCharge(currentPlayer, 50000, 30000, 10000);
+										console.log("charge: ", charge);
+										currentPlayer.money -= charge;
+										deck.unshift(goldCard);
+										break;
+									case "18": 
+										currentPlayer.money += 100000;
+										deck.unshift(goldCard);
+										break;
+									case "19": // 한 바퀴 돌기
+										currentPlayer.destination = currentPlayer.location + 40;
+										move(currentPlayer);
+										deck.unshift(goldCard);
+										break;
+									case "20": // 한 바퀴 돌기
+										currentPlayer.destination = currentPlayer.location + 40;
+										move(currentPlayer);
+										deck.unshift(goldCard);
+										break;
+									case "21": // 돈 지출
+										charge = calCharge(currentPlayer, 100000, 60000, 30000);
+										console.log("charge: ", charge);
+										currentPlayer.money -= charge;
+										deck.unshift(goldCard);
+										break;
+									case "22": 
+										currentPlayer.money += 300000;
+										deck.unshift(goldCard);
+										break;
+									case "23": // 반액대매출
+										deck.unshift(goldCard);
+										break;
+									case "24": 
+										deck.unshift(goldCard);
+										break;
+									case "25": // 서울로 이동
+										currentPlayer.destination = 40;
+										move(currentPlayer);
+										arrived(currentPlayer);
+										deck.unshift(goldCard);
+										break;
+									case "26": // 돈 지출
+										charge = calCharge(currentPlayer, 150000, 100000, 30000);
+										console.log("charge: ", charge);		
+										currentPlayer.money -= charge;
+										deck.unshift(goldCard);
+										break;
+									case "27": // 우주여행 이동
+										currentPlayer.destination = 31;
+										move(currentPlayer);
+										arrived(currentPlayer);
+										deck.unshift(goldCard);
+										break;
+									case "28": // 사회복지기금 접수처 이동
+										currentPlayer.destination = 21;
+										move(currentPlayer);
+										arrived(currentPlayer);
+										deck.unshift(goldCard);
+										break;
+									default:
+										console.log("default");
+								}
+								console.log("goldCard: ", goldCard);
+								console.log("goldCard deck: ", deck);
+							}
+						}
+					});
+				}
+			} // arrived 끝	
+			
+			// 땅 클릭 이벤트
+			$(document).on("click",".marble_board .gameborder",function(){
+				// click한 땅 id 가져오기
+				let clickId = ($(this).find("span").attr("id")).substring(1,3);
+				console.log(clickId);
+				let mapType = landCard[clickId-1].type;
+				let landName = landCard[clickId-1].landName;
+				let landNo = landCard[clickId-1].landNo;
+				let landOwner = 0;
+				let landTollFee = 0;
+				if(mapType == 1) {
+					// 일반 땅
+					$(nomalLand).each(function(index, item) {
+						if(item.landNo==currentPlayer.location) {
+							landOwner = item.owner;
+							landTollFee = item.landTollFee;
+						}
+					});
+				}
+				if(mapType == 2) {
+					// 관광지
+					$(touristDestination).each(function(index, item) {
+						if(item.landNo==currentPlayer.location) {
+							landOwner = item.owner;
+							landTollFee = item.landTollFee;
+						}
+					});
+				}
+				$("#landName").val(landName)
+				$("#landNo").val(landNo)
+				$("#mapType").val(mapType)
+				$("#landOwner").val(landOwner)
+				$("#landTollFee").val(landTollFee)
+			});
+		});
+		
+
+		// 현재 플레이어 정보 표시
+		function displayCurrentPlayerInfo(currentPlayer) {
+			$("#playerNo").val(currentPlayer.playerNo);
+			$("#location").val(currentPlayer.location); 
+			$("#money").val(currentPlayer.money);
+			$("#click").val(currentPlayer.click);
+			$("#desertIslandEscape").val(currentPlayer.desertIslandEscape);
+			$("#specialPass").val(currentPlayer.specialPass)
+		}
+		
+		// 황금열쇠 부과금액 계산
+		function calCharge(currentPlayer, hotel, building, villa) {
+			let hotelCharge = hotel;
+			let buildingCharge = building;
+			let villaCharge = villa;
+			let charge = 0;
+			$(nomalLand).each(function(index, item) {
+				if(item.owner==currentPlayer.playerNo) {
+					if(item.hotelbuilt == 1) {
+						charge += hotelCharge
+					}
+					if(item.buildingbuilt == 1) {
+						charge += buildingCharge
+					}
+					if(item.villabuilt == 1) {
+						charge += villaCharge
+					}
+				}
+			});
+			return charge;
+		}
+			
+		
+	}) // document ready 닫는 괄호
+</script>
 </html>
