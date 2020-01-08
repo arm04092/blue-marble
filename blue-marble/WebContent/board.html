@@ -334,7 +334,7 @@ td:hover  {
 			
 			// 플레이어 말 생성
 			for(let i = 1; i<=playerLen; i++) {
-				let html = "<span id='player"+i+"'><button class='btn-info'>"+i+"</button></span>";
+				let html = "<span id='player"+i+"'><input type='image'src='/blue-marble/image/player"+i+".png' width='50' height='50'></button></span>";
 				$("#p1").append(html);
 			}
 			
@@ -377,9 +377,49 @@ td:hover  {
 				arrived(currentPlayer);
 				displayCurrentPlayerInfo(currentPlayer);
 				
+				// 우주여행일 경우 더블진행 안함
+				if(currentPlayer.location==31){
+					currentPlayer.doubleFlag = 0;
+				};
+				
 				// 다음 플레이어 넘김, 클릭 횟수 초기화(3연속 더블까지만 진행)
 				currentPlayer = nextPlayer(currentPlayer);
-			})
+				
+				// 다음 플레이어의 우주여행
+				if(currentPlayer.location==31){
+					console.log(currentPlayer.playerNo+"번 플레이어 우주 여행 시작!")
+					// 주사위 버튼 비활성화
+					$(function(){
+						 $("#diceBtn").prop("disabled", true);
+					  });
+					 
+						$(document).on("click","#table td",function(){
+				            // click한 땅 id 가져오기
+				            let clickId = Number(($(this).attr("id")).substring(1,3));
+				            
+				            console.log("우주여행 클릭ID: ",clickId);
+				            
+				            // 말 이동
+							$("#player"+currentPlayer.playerNo).appendTo("#p"+clickId);	
+							currentPlayer.location = clickId;
+							
+							// 주사위 활성화
+							$(document).off("click","#table td");
+							$("#diceBtn")
+						      .prop("disabled", false);
+							
+							currentPlayer.destination = currentPlayer.location;
+							console.log("우주 여행 후 location: ", currentPlayer.location);
+							console.log("우주 여행 후 destination: ", currentPlayer.destination);	
+							// settimeout 추가 
+							// 다음 플레이어 넘김
+							currentPlayer = nextPlayer(currentPlayer);
+							return;
+						});
+						
+				}
+				// 우주여행 끝
+			});
 			
 			// 더블 테스트용 버튼
 			$("#doubleBtn").click(function() {
@@ -444,8 +484,48 @@ td:hover  {
 				arrived(currentPlayer);
 				displayCurrentPlayerInfo(currentPlayer);
 				
+				// 우주여행일 경우 더블진행 안함
+				if(currentPlayer.location==31){
+					currentPlayer.doubleFlag = 0;
+				};
+				
 				// 다음 플레이어 넘김, 클릭 횟수 초기화(3연속 더블까지만 진행)
 				currentPlayer = nextPlayer(currentPlayer);
+				
+				// 다음 플레이어의 우주여행
+				if(currentPlayer.location==31){
+					console.log(currentPlayer.playerNo+"번 플레이어 우주 여행 시작!")
+					// 주사위 버튼 비활성화
+					$(function(){
+						 $("#diceBtn").prop("disabled", true);
+					  });
+					 
+						$(document).on("click","#table td",function(){
+				            // click한 땅 id 가져오기
+				            let clickId = Number(($(this).attr("id")).substring(1,3));
+				            
+				            console.log("우주여행 클릭ID: ",clickId);
+				            
+				            // 말 이동
+							$("#player"+currentPlayer.playerNo).appendTo("#p"+clickId);	
+							currentPlayer.location = clickId;
+							
+							// 주사위 활성화
+							$(document).off("click","#table td");
+							$("#diceBtn")
+						      .prop("disabled", false);
+							
+							currentPlayer.destination = currentPlayer.location;
+							console.log("우주 여행 후 location: ", currentPlayer.location);
+							console.log("우주 여행 후 destination: ", currentPlayer.destination);	
+							// settimeout 추가 
+							// 다음 플레이어 넘김
+							currentPlayer = nextPlayer(currentPlayer);
+							return;
+						});
+						
+				}
+				// 우주여행 끝
 			})
 			
 			
